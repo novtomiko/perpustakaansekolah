@@ -44,57 +44,61 @@ class _LoginPageState extends State<LoginPage> {
                     topLeft: Radius.circular(15),
                     topRight: Radius.circular(15)),
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Center(
-                      child: Text(
-                        'Silakan Masukkan Email & Password kamu',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.indigo.shade800,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 0),
-                    userInput(_emailTextboxController, 'Email',
-                        TextInputType.emailAddress),
-                    userInput(_passwordTextboxController, 'Password',
-                        TextInputType.visiblePassword),
-                    Container(
-                      height: 55,
-                      padding:
-                          const EdgeInsets.only(top: 5, left: 70, right: 70),
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
-                                Colors.indigo.shade800),
-                            shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(25)))),
-                        onPressed: () {
-                          var validate = _formKey.currentState.validate();
-                          if (validate) {
-                            if (!_isLoading) _submit();
-                          }
-                        },
+              child: Form(
+                key: _formKey,
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Center(
                         child: Text(
-                          'Login',
+                          'Silakan Masukkan Email & Password kamu',
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 18,
                             fontWeight: FontWeight.w700,
-                            color: Colors.white,
+                            color: Colors.indigo.shade800,
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(height: 20),
-                    Divider(thickness: 0, color: Colors.white),
-                  ],
+                      SizedBox(height: 0),
+                      userInput(_emailTextboxController, 'Email',
+                          TextInputType.emailAddress),
+                      userInput(_passwordTextboxController, 'Password',
+                          TextInputType.visiblePassword),
+                      Container(
+                        height: 55,
+                        padding:
+                            const EdgeInsets.only(top: 5, left: 70, right: 70),
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  Colors.indigo.shade800),
+                              shape: MaterialStateProperty.all(
+                                  RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(25)))),
+                          onPressed: () {
+                            var validate = _formKey.currentState.validate();
+                            if (validate) {
+                              if (!_isLoading) _submit();
+                            }
+                          },
+                          child: Text(
+                            'Login',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Divider(thickness: 0, color: Colors.white),
+                    ],
+                  ),
                 ),
               ),
             ),

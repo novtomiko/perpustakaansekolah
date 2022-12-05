@@ -1,5 +1,4 @@
-import 'dart:developer';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:perpustakaansekolah/bloc/registrasi_bloc.dart';
 import 'package:perpustakaansekolah/widget/success_dialog.dart';
@@ -44,67 +43,67 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
                     topLeft: Radius.circular(15),
                     topRight: Radius.circular(15)),
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Center(
-                      child: Text(
-                        'Silakan Masukkan Data-Data Dibawah ini',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.indigo.shade800,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 45),
-                    userInput(
-                        _namaTextboxController, 'Nama', TextInputType.text),
-                    userInput(_emailTextboxController, 'Email',
-                        TextInputType.emailAddress),
-                    userInput(_passwordTextboxController, 'Password',
-                        TextInputType.visiblePassword),
-                    userInput(_confirmpasswordTextboxController,
-                        'Konfirmasi Password', TextInputType.visiblePassword),
-                    Container(
-                      height: 55,
-                      // for an exact replicate, remove the padding.
-                      // pour une réplique exact, enlever le padding.
-                      padding:
-                          const EdgeInsets.only(top: 5, left: 70, right: 70),
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
-                                Colors.indigo.shade800),
-                            shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(25)))),
-                        onPressed: () {
-                          _formKey.currentState.save();
-                          setState(() {
-                            _isLoading = true;
-                          });
-                          var validate = _formKey.currentState.validate();
-                          if (validate) {
-                            if (!_isLoading) _submit();
-                          }
-                        },
+              child: Form(
+                key: _formKey,
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Center(
                         child: Text(
-                          'Sign up',
+                          'Silakan Masukkan Data-Data Dibawah ini',
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 18,
                             fontWeight: FontWeight.w700,
-                            color: Colors.white,
+                            color: Colors.indigo.shade800,
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(height: 45),
-                    Divider(thickness: 0, color: Colors.white),
-                  ],
+                      SizedBox(height: 45),
+                      userInput(
+                          _namaTextboxController, 'Nama', TextInputType.text),
+                      userInput(_emailTextboxController, 'Email',
+                          TextInputType.emailAddress),
+                      userInput(_passwordTextboxController, 'Password',
+                          TextInputType.visiblePassword),
+                      userInput(_confirmpasswordTextboxController,
+                          'Konfirmasi Password', TextInputType.visiblePassword),
+                      Container(
+                        height: 55,
+                        // for an exact replicate, remove the padding.
+                        // pour une réplique exact, enlever le padding.
+                        padding:
+                            const EdgeInsets.only(top: 5, left: 70, right: 70),
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  Colors.indigo.shade800),
+                              shape: MaterialStateProperty.all(
+                                  RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(25)))),
+                          onPressed: () {
+                            var validate = _formKey.currentState.validate();
+                            if (validate) {
+                              if (!_isLoading) _submit();
+                            }
+                          },
+                          child: Text(
+                            'Sign up',
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 45),
+                      Divider(thickness: 0, color: Colors.white),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -201,7 +200,9 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
                 },
               ));
     }, onError: (error) {
-      print(error);
+      if (kDebugMode) {
+        print(error);
+      }
       showDialog(
           context: context,
           barrierDismissible: false,
