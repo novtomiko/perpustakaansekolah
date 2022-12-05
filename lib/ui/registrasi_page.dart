@@ -5,7 +5,7 @@ import 'package:perpustakaansekolah/widget/warning_dialog.dart';
 
 class RegistrasiPage extends StatefulWidget {
   @override
-  _RegistrasiPageState createState () => _RegistrasiPageState();
+  _RegistrasiPageState createState() => _RegistrasiPageState();
 }
 
 class _RegistrasiPageState extends State<RegistrasiPage> {
@@ -15,11 +15,13 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
   final _namaTextboxController = TextEditingController();
   final _emailTextboxController = TextEditingController();
   final _passwordTextboxController = TextEditingController();
- 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Registrasi"),),
+      appBar: AppBar(
+        title: Text("Registrasi"),
+      ),
       body: SingleChildScrollView(
         child: Container(
           child: Padding(
@@ -49,8 +51,8 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
       decoration: InputDecoration(labelText: "Nama"),
       keyboardType: TextInputType.text,
       controller: _namaTextboxController,
-      validator: (value){
-        if(value.length < 3){
+      validator: (value) {
+        if (value.length < 3) {
           return "Nama harus diisi minimal 3 karakter";
         }
         return null;
@@ -70,12 +72,13 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
           return 'Email harus diisi';
         }
         //validasi email
-        Pattern pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1-3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+        Pattern pattern =
+            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1-3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
         RegExp regex = new RegExp(pattern);
         if (!regex.hasMatch(value)) {
           return "Email tidak valid";
         }
-        return null; 
+        return null;
       },
     );
   }
@@ -89,7 +92,7 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
       controller: _passwordTextboxController,
       validator: (value) {
         //validasi harus diisi
-        if(value.isEmpty){
+        if (value.isEmpty) {
           return "Password harus diisi";
         }
         return null;
@@ -98,62 +101,60 @@ class _RegistrasiPageState extends State<RegistrasiPage> {
   }
 
   //Membuat textbox konfirmasi password
-  Widget _passwordKonfirmasiTextField(){
+  Widget _passwordKonfirmasiTextField() {
     return TextFormField(
-              decoration: InputDecoration(labelText: "Konfirmasi Password"),
-              keyboardType: TextInputType.text,
-              obscureText: true,
-              validator: (value) {
-                //jika inputan tidak sama dengan password
-                if(value != _passwordTextboxController.text) {
-                  return "Konfirmasi Password tidak sama";
-                }
-                return null;
-              },
-            );
-      }
+      decoration: InputDecoration(labelText: "Konfirmasi Password"),
+      keyboardType: TextInputType.text,
+      obscureText: true,
+      validator: (value) {
+        //jika inputan tidak sama dengan password
+        if (value != _passwordTextboxController.text) {
+          return "Konfirmasi Password tidak sama";
+        }
+        return null;
+      },
+    );
+  }
 
-      //Membuat Tombol Registrasi
-      Widget _buttonRegistrasi() {
-            return RaisedButton(
-              child: Text("Registrasi"),
-              onPressed: (){
-                var validate = _formKey.currentState.validate();
-                if(validate) {
-                  if(!_isLoading) _submit();
-                }
-              });
-        } 
+  //Membuat Tombol Registrasi
+  Widget _buttonRegistrasi() {
+    return ElevatedButton(
+        child: Text("Registrasi"),
+        onPressed: () {
+          var validate = _formKey.currentState.validate();
+          if (validate) {
+            if (!_isLoading) _submit();
+          }
+        });
+  }
 
-        void _submit() {
-            _formKey.currentState.save();
-            setState(() {
-              _isLoading = true;
-            });
-            RegistrasiBloc.registrasi(
-                nama: _namaTextboxController.text,
-                email: _emailTextboxController.text,
-                password: _passwordTextboxController.text
-            ).then((value) {
-                showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (BuildContext context) => SuccessDialog(
-                    description: "Registrasi berhasil, Silahkan login",
-                    okClick: () {
-                      Navigator.pop(context);
-                    },
-                  )
-                );   
-            }, onError: (error) {
-              print(error);
+  void _submit() {
+    _formKey.currentState.save();
+    setState(() {
+      _isLoading = true;
+    });
+    RegistrasiBloc.registrasi(
+            nama: _namaTextboxController.text,
+            email: _emailTextboxController.text,
+            password: _passwordTextboxController.text)
+        .then((value) {
+      showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) => SuccessDialog(
+                description: "Registrasi berhasil, Silahkan login",
+                okClick: () {
+                  Navigator.pop(context);
+                },
+              ));
+    }, onError: (error) {
+      print(error);
       showDialog(
           context: context,
           barrierDismissible: false,
           builder: (BuildContext context) => WarningDialog(
                 description: "Registrasi gagal, Silahkan Coba Lagi",
-              )
-          );
+              ));
     });
     setState(() {
       _isLoading = false;
