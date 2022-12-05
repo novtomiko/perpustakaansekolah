@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:perpustakaansekolah/helpers/user_info.dart';
 import 'package:perpustakaansekolah/ui/login_page.dart';
 import 'package:perpustakaansekolah/ui/buku_page.dart';
+import 'package:perpustakaansekolah/ui/welcome_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -39,7 +40,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Perpustakaan Sekolah',
       debugShowCheckedModeBanner: false,
-      home: page,
+      home: WelcomeScreen(),
     );
   }
 }

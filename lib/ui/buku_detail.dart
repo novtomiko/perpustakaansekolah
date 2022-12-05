@@ -37,25 +37,33 @@ class _BukuDetailState extends State<BukuDetail> {
             _tombolHapusEdit()
           ],
         ),
-      ),  
+      ),
     );
   }
 
-  Widget _tombolHapusEdit(){
+  Widget _tombolHapusEdit() {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         //Tombol Edit
-        RaisedButton(
-            child: Text("EDIT"), color: Colors.green, onPressed: () {
-          Navigator.push(
-              context,
-              new MaterialPageRoute(
-                  builder: (context) => BukuForm(buku: widget.buku,)));
+        ElevatedButton(
+            child: Text("EDIT"),
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.green)),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  new MaterialPageRoute(
+                      builder: (context) => BukuForm(
+                            buku: widget.buku,
+                          )));
             }),
-            //Tombol Hapus
-            RaisedButton(
-                child: Text("DELETE"), color: Colors.red, onPressed: ()=>confirmHapus()),
+        //Tombol Hapus
+        ElevatedButton(
+            child: Text("DELETE"),
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.red)),
+            onPressed: () => confirmHapus()),
       ],
     );
   }
@@ -63,35 +71,37 @@ class _BukuDetailState extends State<BukuDetail> {
   void confirmHapus() {
     // ignore: unnecessary_new
     AlertDialog alertDialog = new AlertDialog(
-      content: Text ("Yakin ingin menghapus data ini?"),
+      content: Text("Yakin ingin menghapus data ini?"),
       actions: [
         //tombol hapus
-        RaisedButton(
+        ElevatedButton(
           child: Text("Ya"),
-          color: Colors.green,
-          onPressed: (){
-            BukuBloc.deleteBuku(id: widget.buku.id).then((value){
-              Navigator.of(context).push(new MaterialPageRoute(builder: (BuildContext context)=> BukuPage()));
-            },onError: (error){
-                showDialog(
+          style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.green)),
+          onPressed: () {
+            BukuBloc.deleteBuku(id: widget.buku.id).then((value) {
+              Navigator.of(context).push(new MaterialPageRoute(
+                  builder: (BuildContext context) => BukuPage()));
+            }, onError: (error) {
+              showDialog(
                   context: context,
                   builder: ((context) => WarningDialog(
-                    description: "Hapus data gagal, silahkan coba lagi",
-                  )
-              ));
+                        description: "Hapus data gagal, silahkan coba lagi",
+                      )));
             });
           },
-      ),
+        ),
         //tombol batal
-        RaisedButton(
+        ElevatedButton(
           child: Text("Batal"),
-          color: Colors.red,
-          onPressed: ()=>Navigator.pop(context),
+          style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(Colors.red)),
+          onPressed: () => Navigator.pop(context),
         )
       ],
     );
-    
 
-    showDialog(context: context, builder: (BuildContext context) => alertDialog);
+    showDialog(
+        context: context, builder: (BuildContext context) => alertDialog);
   }
 }
