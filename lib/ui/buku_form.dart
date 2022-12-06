@@ -100,7 +100,7 @@ class _BukuFormState extends State<BukuForm> {
   Widget _penulisBukuTextField() {
     return TextFormField(
       decoration: InputDecoration(labelText: "Penulis Buku"),
-      keyboardType: TextInputType.number,
+      keyboardType: TextInputType.text,
       controller: _penulisBukuTextboxController,
       validator: (value) {
         if (value.isEmpty) {

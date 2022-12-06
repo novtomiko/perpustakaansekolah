@@ -1,5 +1,5 @@
 class ApiUrl {
-  static const String baseUrl = 'http://10.0.2.2/perpustakaan-api/public';
+  static const String baseUrl = 'http://ardiandp.skom.id/perpus/public/';
 
   static const String registrasi = baseUrl + '/registrasi';
   static const String login = baseUrl + '/login';
