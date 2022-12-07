@@ -111,6 +111,49 @@ class _BukuFormState extends State<BukuForm> {
     );
   }
 
+  /* simpan() {
+    setState(() {
+      _isLoading = true;
+    });
+    Buku createBuku = new Buku();
+    createBuku.kodeBuku = _kodeBukuTextboxController.text;
+    createBuku.judulBuku = _judulBukuTextboxController.text;
+    createBuku.penulisBuku = _penulisBukuTextboxController.text;
+    BukuBloc.addBuku(buku: createBuku).then((value) {
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (BuildContext context) => BukuPage()));
+    }, onError: (error) {
+      showDialog(
+          context: this.context,
+          builder: (BuildContext context) => WarningDialog(
+                description: "Simpan gagal, silahkan coba lagi",
+              ));
+    });
+    setState(() {
+      _isLoading = false;
+    });
+  } */
+
+  //Membuat Tombol Simpan/Ubah
+  Widget _buttonSubmit() {
+    return ElevatedButton(
+        child: Text(tombolSubmit),
+        onPressed: () {
+          var validate = _formKey.currentState.validate();
+          if (validate) {
+            if (!_isLoading) {
+              if (widget.buku != null) {
+                //kondisi update buku
+                ubah();
+              } else {
+                //kondisi tambah buku
+                simpan();
+              }
+            }
+          }
+        });
+  }
+
   simpan() {
     setState(() {
       _isLoading = true;
@@ -134,25 +177,6 @@ class _BukuFormState extends State<BukuForm> {
     });
   }
 
-  //Membuat Tombol Simpan/Ubah
-  Widget _buttonSubmit() {
-    return ElevatedButton(
-        child: Text(tombolSubmit),
-        onPressed: () {
-          var validate = _formKey.currentState.validate();
-          if (validate) {
-            if (!_isLoading) {
-              if (widget.buku != null) {
-                //kondisi update buku
-              } else {
-                //kondisi tambah buku
-                simpan();
-              }
-            }
-          }
-        });
-  }
-
   ubah() {
     setState(() {
       _isLoading = true;
@@ -164,7 +188,7 @@ class _BukuFormState extends State<BukuForm> {
     updateBuku.penulisBuku = _penulisBukuTextboxController.text;
     BukuBloc.updateBuku(buku: updateBuku).then((value) {
       Navigator.of(context).push(
-          new MaterialPageRoute(builder: (BuildContext context) => BukuPage()));
+          MaterialPageRoute(builder: (BuildContext context) => BukuPage()));
     }, onError: (error) {
       showDialog(
           context: context,
