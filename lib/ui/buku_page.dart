@@ -20,6 +20,7 @@ class _BukuPageState extends State<BukuPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('List Buku'),
+        backgroundColor: Colors.amber,
         actions: [
           Padding(
               padding: EdgeInsets.only(right: 20.0),
