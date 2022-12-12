@@ -23,15 +23,15 @@ class _BukuDetailState extends State<BukuDetail> {
         child: Column(
           children: [
             Text(
-              "Kode : ${widget.buku.kodeBuku}",
+              "Kode Buku : ${widget.buku.kodeBuku}",
               style: TextStyle(fontSize: 20.0),
             ),
             Text(
-              "Nama : ${widget.buku.judulBuku}",
+              "Judul Buku : ${widget.buku.judulBuku}",
               style: TextStyle(fontSize: 18.0),
             ),
             Text(
-              "Harga : Rp. ${widget.buku.penulisBuku}",
+              "Penulis Buku : ${widget.buku.penulisBuku}",
               style: TextStyle(fontSize: 18.0),
             ),
             _tombolHapusEdit()
