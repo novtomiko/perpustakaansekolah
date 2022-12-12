@@ -50,7 +50,19 @@ class _BukuPageState extends State<BukuPage> {
           ],
         ),
       ),
-      body: CarouselBuku(),
+      body: FutureBuilder<List>(
+        future: BukuBloc.getBukus(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) print(snapshot.error);
+          return snapshot.hasData
+              ? ListBuku(
+                  list: snapshot.data,
+                )
+              : Center(
+                  child: CircularProgressIndicator(),
+                );
+        },
+      ),
     );
   }
 }
@@ -77,6 +89,9 @@ class ItemBuku extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 100.0,
+      width: double.maxFinite,
+      padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
       child: GestureDetector(
         onTap: () {
           Navigator.push(
@@ -85,14 +100,86 @@ class ItemBuku extends StatelessWidget {
                   builder: (context) => BukuDetail(buku: buku)));
         },
         child: Card(
-          child: ListTile(
-            title: Text(buku.judulBuku),
-            subtitle: Text(buku.penulisBuku),
+          elevation: 5,
+          child: Padding(
+            padding: EdgeInsets.all(7),
+            child: Stack(
+              children: <Widget>[
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Stack(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10, top: 5),
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                iconBuku(),
+                                SizedBox(height: 10.0),
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(left: 20.0),
+                                    child: Row(
+                                      children: <Widget>[
+                                        RichText(
+                                            textAlign: TextAlign.left,
+                                            text: TextSpan(
+                                                text: buku.judulBuku,
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 20),
+                                                children: <TextSpan>[
+                                                  TextSpan(
+                                                      text: ("\n" +
+                                                          buku.penulisBuku),
+                                                      style: TextStyle(
+                                                          color: Colors.grey,
+                                                          fontSize: 15,
+                                                          fontStyle:
+                                                              FontStyle.italic))
+                                                ]))
+                                      ],
+                                    ),
+                                  ),
+                                )
+                                // ListTile(
+                                //   title: Text(buku.judulBuku),
+                                //   subtitle: Text(buku.penulisBuku),
+                                // )
+                              ],
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
+          // child: ListTile(
+          //   title: Text(buku.judulBuku),
+          //   subtitle: Text(buku.penulisBuku),
+          // ),
         ),
       ),
     );
   }
+}
+
+Widget iconBuku() {
+  return Padding(
+      padding: const EdgeInsets.only(left: 15),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Icon(
+          Icons.book_outlined,
+          color: Colors.amber,
+          size: 40,
+        ),
+      ));
 }
 
 class CarouselBuku extends StatelessWidget {
@@ -100,19 +187,6 @@ class CarouselBuku extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(children: [
-        FutureBuilder<List>(
-          future: BukuBloc.getBukus(),
-          builder: (context, snapshot) {
-            if (snapshot.hasError) print(snapshot.error);
-            return snapshot.hasData
-                ? ListBuku(
-                    list: snapshot.data,
-                  )
-                : Center(
-                    child: CircularProgressIndicator(),
-                  );
-          },
-        ),
         CarouselSlider(
           items: [
             Container(
