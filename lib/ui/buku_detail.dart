@@ -5,6 +5,7 @@ import 'package:perpustakaansekolah/ui/buku_form.dart';
 import 'package:perpustakaansekolah/bloc/buku_bloc.dart';
 import 'package:perpustakaansekolah/widget/warning_dialog.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:perpustakaansekolah/widget/form_dialogedit.dart';
 
 class BukuDetail extends StatefulWidget {
   Buku buku;
@@ -145,6 +146,21 @@ class _BukuDetailState extends State<BukuDetail> {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
+        //Tombol Edit
+        ElevatedButton(
+            child: Text("EDIT"),
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.green)),
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  new MaterialPageRoute(
+                      builder: (context) => BukuForm(
+                            buku: widget.buku,
+                          )));
+            }),
+
+        Padding(padding: EdgeInsets.all(20)),
         //Tombol Hapus
         ElevatedButton(
             child: Text("DELETE"),
