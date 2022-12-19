@@ -46,7 +46,10 @@ class _BukuFormState extends State<BukuForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(judul)),
+      appBar: AppBar(
+        title: Text(judul),
+        backgroundColor: Colors.amber,
+      ),
       body: SingleChildScrollView(
         child: Container(
           child: Padding(
@@ -137,6 +140,8 @@ class _BukuFormState extends State<BukuForm> {
   //Membuat Tombol Simpan/Ubah
   Widget _buttonSubmit() {
     return ElevatedButton(
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.amber)),
         child: Text(tombolSubmit),
         onPressed: () {
           var validate = _formKey.currentState.validate();
