@@ -7,6 +7,7 @@ import 'package:perpustakaansekolah/ui/login_page.dart';
 import 'package:perpustakaansekolah/ui/buku_detail.dart';
 import 'package:perpustakaansekolah/ui/buku_form.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:perpustakaansekolah/widget/form_dialog.dart';
 
 class BukuPage extends StatefulWidget {
   @override
@@ -27,8 +28,11 @@ class _BukuPageState extends State<BukuPage> {
               child: GestureDetector(
                 child: Icon(Icons.add, size: 26.0),
                 onTap: () async {
-                  Navigator.push(context,
-                      new MaterialPageRoute(builder: (context) => BukuForm()));
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return FormWidget();
+                      });
                 },
               ))
         ],
